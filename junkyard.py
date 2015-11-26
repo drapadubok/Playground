@@ -60,3 +60,32 @@ ggplot(df, aes(x='fpr', ymin=0, ymax='tpr')) +\
     geom_area(alpha=0.2) +\
     geom_line(aes(y='tpr')) +\
     ggtitle("ROC Curve w/ AUC=%s" % str(auc))
+
+
+# GridSearch in sklearn, from CS109
+# evolutionary algorithm to replace gridsearch from https://github.com/rsteca/sklearn-deap
+# Evolutionary not tested, may return wrong values
+from sklearn.grid_search import GridSearchCV
+from sklearn.cross_validation import train_test_split
+from sklearn.metrics import confusion_matrix
+
+from evolutionary_search import EvolutionaryAlgorithmSearchCV
+
+def cv_optimize(clf, parameters, X, y, n_jobs=1, n_folds=5, score_func=None, evo=None, population_size=5):
+    if score_func:
+        if evo:
+            gs = EvolutionaryAlgorithmSearchCV(pipeline, grid=parameters, scoring=score_func, n_jobs=n_jobs, population_size=population_size)
+        else:
+            gs = GridSearchCV(clf, param_grid=parameters, cv=n_folds, n_jobs=n_jobs, scoring=score_func)
+    else:
+        if evo:
+            gs = EvolutionaryAlgorithmSearchCV(pipeline, grid=parameters, scoring=None, verbose=True, n_jobs=4, population_size=population_size)
+        else:
+            gs = GridSearchCV(clf, param_grid=parameters, n_jobs=n_jobs, cv=n_folds)
+    gs.fit(X, y)
+    print "BEST", gs.best_params_, gs.best_score_, gs.grid_scores_
+    best = gs.best_estimator_
+    return best
+
+
+
