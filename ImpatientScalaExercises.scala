@@ -8,3 +8,15 @@ def countdown (n: Int) = {
 
 def unicodeProductString (s: String): BigInt = s.getBytes("UTF-8").foldLeft(1)(_*_)
 
+def factorial(i: Int): Int = {
+  (1 to i).foldLeft(1)(_*_)
+}
+
+def epowseries(x: Float, t: Int):Float= {
+  val terms = (1 to t)
+  val out = terms.map { i =>
+    (Math.pow(x, i) / factorial(i)).toFloat
+  }
+  out.foldLeft(1f)((a: Float,b: Float) => (a+b))
+}
+
