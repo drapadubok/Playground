@@ -20,3 +20,5 @@ def epowseries(x: Float, t: Int):Float= {
   out.foldLeft(1f)((a: Float,b: Float) => (a+b))
 }
 
+def getRandomArray(n: Int): Array[Int] = for (i <- (0 until n)) yield scala.util.Random.nextInt(n)
+
