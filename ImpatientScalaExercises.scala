@@ -22,3 +22,12 @@ def epowseries(x: Float, t: Int):Float= {
 
 def getRandomArray(n: Int): Array[Int] = for (i <- (0 until n)) yield scala.util.Random.nextInt(n)
 
+def swapPairs(arr: Array[Int]): Array[Int] = {
+  for (i <- (0 until (arr.length, 2))) {
+    if (i != a.length - 1) {  
+      val temp = a(i)
+      a(i) = a(i+1)
+      a(i+1) = temp
+    }
+  }
+}
